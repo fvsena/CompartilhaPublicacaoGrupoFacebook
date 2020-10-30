@@ -10,7 +10,7 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
     public class CompartilhaPublicacao
     {
         private GoogleChrome Chrome = null;
-        public void Iniciar()
+        public void Iniciar(bool loop = false, bool exibirNavegador = false)
         {
             string usuario;
             string senha;
@@ -31,13 +31,20 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             urlPublicacao = Console.ReadLine();
 
             //INICIA PUBLICACAO
-            ProcessoPublicacao(usuario, senha, urlPublicacao, nomePerfil);
+            PROCESSO:
+            ProcessoPublicacao(usuario, senha, urlPublicacao, nomePerfil, exibirNavegador);
+
+            if (loop)
+            {
+                goto PROCESSO;
+            }
+            
         }
 
-        private void ProcessoPublicacao(string usuario, string senha, string urlPublicacao, string nomePerfil)
+        private void ProcessoPublicacao(string usuario, string senha, string urlPublicacao, string nomePerfil, bool exibirNavegador)
         {
             EscreveLog($"Iniciando processo de compartilhamento em grupos");
-            Chrome = new GoogleChrome(true);
+            Chrome = new GoogleChrome(exibirNavegador);
             int step = 0;
             try
             {

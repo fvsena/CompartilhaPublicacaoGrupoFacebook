@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\felipe.sena\\source\\repos\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {}
+    "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {}
   },
   "projects": {
-    "C:\\Users\\felipe.sena\\source\\repos\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {
+    "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\felipe.sena\\source\\repos\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
+        "projectUniqueName": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
         "projectName": "CompartilhaPublicacaoGrupoFacebook",
-        "projectPath": "C:\\Users\\felipe.sena\\source\\repos\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
+        "projectPath": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
         "packagesPath": "C:\\Users\\felipe.sena\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\felipe.sena\\source\\repos\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\obj\\",
+        "outputPath": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"

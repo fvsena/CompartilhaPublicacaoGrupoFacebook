@@ -7,7 +7,7 @@ namespace CompartilhaPublicacaoGrupoFacebook
     {
         static void Main(string[] args)
         {
-            new CompartilhaPublicacao().Iniciar();
+            new CompartilhaPublicacao().Iniciar(true);
         }
     }
 }
