@@ -1,0 +1,89 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
+        "projectName": "CompartilhaPublicacaoGrupoFacebook",
+        "projectPath": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
+        "packagesPath": "C:\\Users\\felipe.sena\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\obj\\publish\\win-x64\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\felipe.sena\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://packages.indigosoft.biz/nuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.0": {
+          "dependencies": {
+            "Selenium.WebDriverBackedSelenium": {
+              "target": "Package",
+              "version": "[3.141.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
+              "version": "[3.0.0, 3.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Runtime.win-x64",
+              "version": "[3.0.0, 3.0.0]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
+              "version": "[3.0.0, 3.0.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.0.100\\RuntimeIdentifierGraph.json"
+        }
+      },
+      "runtimes": {
+        "win-x64": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
