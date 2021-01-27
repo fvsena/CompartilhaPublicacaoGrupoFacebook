@@ -1,4 +1,5 @@
 ﻿using CompartilhaPublicacaoGrupoFacebook.Navegadores;
+using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -160,7 +161,20 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
                 EscreveLog("Selecionando o perfil pessoal para publicação");
                 Thread.Sleep(5000);
                 Chrome.ClicaElementoPropriedade("button", "aria-label", "Seletor de voz", 10, 2, true);
-                Chrome.ClicaElementoTexto("span", nomePerfil, 10, 2, true);
+
+                var perfis = Chrome.LocalizaElementosPropriedade("div", "role", "menuitemradio", 10, 2, true);
+                foreach (var item in perfis)
+                {
+                    if (item.Text.Equals(nomePerfil))
+                    {
+                        item.Click();
+                        break;
+                    }
+                }
+                //var spanNomePerfil = Chrome.LocalizaElementoTexto("span", nomePerfil, 10, 2, true);
+                //((IJavaScriptExecutor)Chrome.Navegador).ExecuteScript("arguments[0].scrollIntoView(true);", spanNomePerfil);
+                //spanNomePerfil.Click();
+                //Chrome.ClicaElementoTexto("span", nomePerfil, 10, 2, true);
                 Thread.Sleep(3000);
             }
             catch (Exception ex)

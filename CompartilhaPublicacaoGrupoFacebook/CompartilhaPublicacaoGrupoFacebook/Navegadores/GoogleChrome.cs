@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
+using System.Linq;
 using System.Threading;
 
 namespace CompartilhaPublicacaoGrupoFacebook.Navegadores
@@ -32,6 +33,8 @@ namespace CompartilhaPublicacaoGrupoFacebook.Navegadores
             ChromeDriverService.HideCommandPromptWindow = true;
             OptionsChrome = new ChromeOptions();
             OptionsChrome.AddArguments("--no-default-browser-check", "--disable-infobars", "no-sandbox", "--ignore-certificate-errors", "--disable-popup-blocking", "--app=", "--disable-notifications");
+            OptionsChrome.BinaryLocation = @"C:\Program Files\Google\Chrome\Application\chrome.exe";
+
             if (isVisible)
             {
                 OptionsChrome.AddArgument("--start-maximized");
@@ -272,14 +275,22 @@ namespace CompartilhaPublicacaoGrupoFacebook.Navegadores
                 tentativas++;
                 try
                 {
-                    foreach (IWebElement e in Navegador.FindElementsByTagName(tag))
+                    var elementos = Navegador.FindElementsByTagName(tag);
+                    var elementosLocalizados = elementos.Where(e => e.GetAttribute(propriedade) != null && e.GetAttribute(propriedade).ToUpper().Equals(texto.ToUpper()));
+
+                    if (elementosLocalizados.Any())
                     {
-                        if (e.GetAttribute(propriedade) != null && e.GetAttribute(propriedade).ToUpper().Equals(texto.ToUpper()))
-                        {
-                            elemento = e;
-                            break;
-                        }
+                        elemento = elementosLocalizados.FirstOrDefault();
                     }
+
+                    //foreach (IWebElement e in Navegador.FindElementsByTagName(tag))
+                    //{
+                    //    if (e.GetAttribute(propriedade) != null && e.GetAttribute(propriedade).ToUpper().Equals(texto.ToUpper()))
+                    //    {
+                    //        elemento = e;
+                    //        break;
+                    //    }
+                    //}
                     if (elemento == null)
                     {
                         Thread.Sleep(1000 * delay);

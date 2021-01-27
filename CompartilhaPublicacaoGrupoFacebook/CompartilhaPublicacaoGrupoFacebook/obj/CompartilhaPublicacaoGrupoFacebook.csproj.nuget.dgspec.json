@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {}
+    "C:\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {}
   },
   "projects": {
-    "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {
+    "C:\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
+        "projectUniqueName": "C:\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
         "projectName": "CompartilhaPublicacaoGrupoFacebook",
-        "projectPath": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
-        "packagesPath": "C:\\Users\\felipe.sena\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\felipe.sena\\Documents\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\obj\\",
+        "projectPath": "C:\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook.csproj",
+        "packagesPath": "C:\\Users\\fvsen\\.nuget\\packages\\",
+        "outputPath": "C:\\git\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\CompartilhaPublicacaoGrupoFacebook\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\felipe.sena\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\fvsen\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -25,11 +25,11 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "http://packages.indigosoft.biz/nuget": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "netcoreapp3.0": {
+            "targetAlias": "netcoreapp3.0",
             "projectReferences": {}
           }
         },
@@ -41,6 +41,7 @@
       },
       "frameworks": {
         "netcoreapp3.0": {
+          "targetAlias": "netcoreapp3.0",
           "dependencies": {
             "Selenium.WebDriverBackedSelenium": {
               "target": "Package",
@@ -63,20 +64,16 @@
               "version": "[3.0.1, 3.0.1]"
             },
             {
-              "name": "Microsoft.AspNetCore.App.Runtime.win-x64",
-              "version": "[3.0.3, 3.0.3]"
-            },
-            {
               "name": "Microsoft.NETCore.App.Host.win-x64",
               "version": "[3.0.3, 3.0.3]"
             },
             {
-              "name": "Microsoft.NETCore.App.Runtime.win-x64",
-              "version": "[3.0.3, 3.0.3]"
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
             },
             {
-              "name": "Microsoft.WindowsDesktop.App.Runtime.win-x64",
-              "version": "[3.0.3, 3.0.3]"
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[3.0.0, 3.0.0]"
             }
           ],
           "frameworkReferences": {
@@ -84,12 +81,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
-        }
-      },
-      "runtimes": {
-        "win-x64": {
-          "#import": []
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.102\\RuntimeIdentifierGraph.json"
         }
       }
     }
