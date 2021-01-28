@@ -1,0 +1,2 @@
+C:\git\CompartilhaPublicacaoGrupoFacebook\CompartilhaPublicacaoGrupoFacebook\CompartilhaPublicacaoGrupoFacebook\bin\Release\netcoreapp3.0\win-x64\publish\CompartilhaPublicacaoGrupoFacebook.pdb
+C:\git\CompartilhaPublicacaoGrupoFacebook\CompartilhaPublicacaoGrupoFacebook\CompartilhaPublicacaoGrupoFacebook\bin\Release\netcoreapp3.0\win-x64\publish\CompartilhaPublicacaoGrupoFacebook.exe

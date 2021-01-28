@@ -479,6 +479,17 @@ namespace CompartilhaPublicacaoGrupoFacebook.Navegadores
                 throw new Exception("A janela não pode ser localizada");
             }
         }
+
+        /// <summary>
+        /// Executa uma função javascript
+        /// </summary>
+        /// <param name="script">Nome da função</param>
+        /// <param name="elemento">Elemento que será usado de parametro da função javascript</param>
+        public void ExecutarScript(string script, IWebElement elemento)
+        {
+            ((IJavaScriptExecutor)Navegador).ExecuteScript(script, elemento);
+            Thread.Sleep(50);
+        }
         #endregion
 
         private static string GetBasePath()

@@ -17,6 +17,7 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             string senha;
             string nomePerfil;
             string urlPublicacao;
+            string navegador;
 
             Console.WriteLine("### COMPARTILHAMENTO EM GRUPOS FACEBOOK ###");
             Console.Write("Login: ");
@@ -31,8 +32,19 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             Console.Write("URL: ");
             urlPublicacao = Console.ReadLine();
 
-            //INICIA PUBLICACAO
-            PROCESSO:
+            Console.Write("Exibir navegador? SIM ou NÃO ");
+            navegador = Console.ReadLine();
+
+            while (!navegador.ToUpper().Equals("SIM") && !navegador.ToUpper().Equals("NÃO"))
+            {
+                Console.Write("Exibir navegador? SIM ou NÃO ");
+                navegador = Console.ReadLine();
+            }
+
+            exibirNavegador = navegador.ToUpper().Equals("SIM");
+
+        //INICIA PUBLICACAO
+        PROCESSO:
             ProcessoPublicacao(usuario, senha, urlPublicacao, nomePerfil, exibirNavegador);
 
             if (loop)
@@ -243,7 +255,10 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             try
             {
                 EscreveLog($"Descendo a lista de grupos");
-                Chrome.Navegador.ExecuteScript(JavaScript_ScrollListaDeGrupos(), null);
+
+                var divMae = Chrome.LocalizaElementoPropriedade("div", "aria-label", "Compartilhar em um grupo", 10, 2, true);
+
+                Chrome.ExecutarScript(JavaScript_ScrollListaDeGrupos(), divMae);
             }
             catch (Exception ex)
             {
@@ -253,8 +268,15 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
 
         private string JavaScript_ScrollListaDeGrupos()
         {
-            return @"var element = document.evaluate(""/html/body/div[1]/div/div[1]/div[1]/div[4]/div/div/div[1]/div/div[2]/div/div/div/div[3]/div[3]/div/div[2]/div"", document, null, XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue;
-                    element.scrollTo(0, element.scrollHeight+100);";
+            return @"
+                    console.log(""arguments[0]"");
+                    var divs = arguments[0].getElementsByTagName(""div"");
+                    for (i = 0; i < divs.length; i++){
+                    if(divs.item(i).getAttribute(""aria-busy"") != null && divs.item(i).getAttribute(""aria-busy"") == ""false""){
+                        divs.item(i).scroll(0, divs.item(i).scrollTop + 1000);
+                            break;
+                        }
+                    }";
         }
     }
 }
