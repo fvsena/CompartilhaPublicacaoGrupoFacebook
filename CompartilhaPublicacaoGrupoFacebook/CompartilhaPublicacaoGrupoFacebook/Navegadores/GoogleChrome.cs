@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Management;
 using System.Threading;
 
 namespace CompartilhaPublicacaoGrupoFacebook.Navegadores
@@ -381,7 +382,7 @@ namespace CompartilhaPublicacaoGrupoFacebook.Navegadores
         /// <summary>
         /// Método que finaliza a execução do Chrome Driver
         /// </summary>
-        public void EncerraDriver()
+        public void EncerraOnlyDriver()
         {
             try
             {
@@ -496,6 +497,57 @@ namespace CompartilhaPublicacaoGrupoFacebook.Navegadores
         {
             using var processModule = Process.GetCurrentProcess().MainModule;
             return Path.GetDirectoryName(processModule?.FileName);
+        }
+
+        /// <summary>
+        /// Encerra o processo do Chromedriver e todas as janelas do Chrome que este iniciou
+        /// </summary>
+        /// <param name="chromeDriverProcessID">ID do processo gerado pelo Chromedriver</param>
+        public void EncerraDriver()
+        {
+            try
+            {
+                System.Diagnostics.Process[] chromeDriverProcesses = System.Diagnostics.Process.GetProcessesByName("chromedriver");
+                foreach (var chromeDriverProcess in chromeDriverProcesses)
+                {
+                    if (chromeDriverProcess.Id.ToString().Equals(ProcessIdDriver))
+                    {
+                        chromeDriverProcess.Kill();
+                        break;
+                    }
+                }
+
+                EncerrarNavegador(ProcessIdDriver);
+            }
+            catch
+            {
+
+            }
+        }
+
+        /// <summary>
+        /// Encerra todas as janelas do Chrome de acordo com o ID do processo pai
+        /// </summary>
+        /// <param name="chromeDriverProcessID">ID do processo pai</param>
+        private void EncerrarNavegador(string chromeDriverProcessID)
+        {
+
+            System.Diagnostics.Process[] chromeProcess = System.Diagnostics.Process.GetProcessesByName("chrome");
+            foreach (var process in chromeProcess)
+            {
+                int parentPid = 0;
+                using (ManagementObject mo = new ManagementObject($"win32_process.handle='{process.Id}'"))
+                {
+                    mo.Get();
+                    parentPid = Convert.ToInt32(mo["ParentProcessId"]);
+
+                    if (parentPid.ToString() == chromeDriverProcessID)
+                    {
+                        process.Kill();
+                        return;
+                    }
+                }
+            }
         }
     }
 }

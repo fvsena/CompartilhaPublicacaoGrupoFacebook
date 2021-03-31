@@ -1,8 +1,11 @@
-﻿using CompartilhaPublicacaoGrupoFacebook.Navegadores;
+﻿using CompartilhaPublicacaoGrupoFacebook.Model;
+using CompartilhaPublicacaoGrupoFacebook.Navegadores;
+using CompartilhaPublicacaoGrupoFacebook.Util;
 using OpenQA.Selenium;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text;
 using System.Threading;
 
@@ -11,6 +14,10 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
     public class CompartilhaPublicacao
     {
         private GoogleChrome Chrome = null;
+        private List<Publicacao> resultados = new List<Publicacao>();
+        Queue<string> grupos;
+
+
         public void Iniciar(bool loop = false, bool exibirNavegador = false)
         {
             string usuario;
@@ -57,10 +64,11 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
         private void ProcessoPublicacao(string usuario, string senha, string urlPublicacao, string nomePerfil, bool exibirNavegador)
         {
             EscreveLog($"Iniciando processo de compartilhamento em grupos");
-            Chrome = new GoogleChrome(exibirNavegador);
+            
             int step = 0;
             try
             {
+                this.grupos = new CSVUtil().CarregaGrupos("arquivos\\grupos.csv");
                 string grupo = "";
                 while (step <= 5)
                 {
@@ -69,29 +77,43 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
                         switch (step)
                         {
                             case 0:
+                                Chrome = new GoogleChrome(exibirNavegador);
                                 LoginFacebook(usuario, senha);
                                 break;
                             case 1:
                                 AcessaTelaPagina(urlPublicacao);
                                 break;
                             case 2:
-                                SelecionaPerfil(nomePerfil);
-                                break;
-                            case 3:
                                 IniciaCompartilhamento();
                                 break;
+                            case 3:
+                                SelecionaPerfil(nomePerfil);
+                                break;
                             case 4:
-                                if (!Publicar())
+                                if (!grupos.Any())
                                 {
-                                    ScrollListaDeGrupos();
-                                    if (!Publicar())
-                                    {
-                                        goto case 5;
-                                    }
+                                    step = 6;
+                                    goto case 6;
                                 }
-                                step = 4;
-                                goto case 4;
+
+                                grupo = grupos.Dequeue();
+                                BuscaGrupo(grupo);
+
+                                if (!AcessaTelaCompartilharGrupo(grupo))
+                                {
+                                    resultados.Add(new Publicacao() { Sucesso = false, Grupo = grupo, DataPublicacao = DateTime.Now, Mensagem = "Grupo não localizado" });
+                                    step = 1;
+                                    goto case 1;
+                                }
+
+                                break;
+                               
                             case 5:
+                                Publicar();
+                                resultados.Add(new Publicacao() { Sucesso = true, Grupo = grupo, DataPublicacao = DateTime.Now, Mensagem = "Publicação realizada"});
+                                step = 1;
+                                goto case 1;
+                            case 6:
                                 EscreveLog("Processo finalizado");
                                 break;
                         }
@@ -100,7 +122,9 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
                     catch (Exception ex)
                     {
                         EscreveLog($"Falha ao realizar publicação", true);
+                        resultados.Add(new Publicacao() { Sucesso = false, Grupo = grupo, DataPublicacao = DateTime.Now, Mensagem = ex.Message });
                         Console.WriteLine($"Falha ao realizar publicação no grupo {grupo}: {ex.Message}");
+                        Chrome = new GoogleChrome(exibirNavegador);
                         step = 1;
                     }
                 }
@@ -112,8 +136,9 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             finally
             {
                 Chrome.EncerraDriver();
-                Chrome.EncerraNavegador();
+                //Chrome.EncerraNavegador();
             }
+            CSVUtil.EscreverCSV(resultados, $"resultado_{DateTime.Now.ToString("yyyyMMddHHmmss")}.csv", false);
         }
 
         private void EscreveLog(string texto, bool escreveTxt = false)
@@ -158,7 +183,7 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
                 EscreveLog("Acessando link da publicação");
                 Thread.Sleep(5000);
                 Chrome.Navegador.Navigate().GoToUrl(urlPublicacao);
-                Chrome.LocalizaElementoPropriedade("button", "aria-label", "Seletor de voz", 25, 2, true);
+                Chrome.LocalizaElementoTexto("span", "Compartilhar", 10, 2, true);
             }
             catch (Exception ex)
             {
@@ -172,7 +197,7 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             {
                 EscreveLog("Selecionando o perfil pessoal para publicação");
                 Thread.Sleep(5000);
-                Chrome.ClicaElementoPropriedade("button", "aria-label", "Seletor de voz", 10, 2, true);
+                Chrome.ClicaElementoPropriedade("label", "aria-label", "Compartilhar como", 10, 2, true);
 
                 var perfis = Chrome.LocalizaElementosPropriedade("div", "role", "menuitemradio", 10, 2, true);
                 foreach (var item in perfis)
@@ -210,6 +235,44 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             }
         }
 
+        private void BuscaGrupo(string grupo)
+        {
+            try
+            {
+                EscreveLog("Realizando a busca do grupo");
+                Thread.Sleep(2000);
+                Chrome.EscreveElementoProprieadade("input", "aria-label", "Procurar grupos", grupo, 10, 2, true);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private bool AcessaTelaCompartilharGrupo(string grupo)
+        {
+            try
+            {
+                bool localizado = false;
+                var spanGrupo = Chrome.LocalizaElementoTexto("span", grupo, 3, 1, false);
+                if (spanGrupo != null)
+                {
+                    localizado = true;
+                    spanGrupo.Click();
+                }
+                else
+                {
+                    EscreveLog($"Grupo não localizado: {grupo}");
+                    Chrome.EscreveElementoProprieadade("input", "aria-label", "Procurar grupos", "", 10, 2, true);
+                }
+                return localizado;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         private bool ExisteBotaoCompartilhar()
         {
             try
@@ -225,24 +288,15 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             }
         }
 
-        private bool Publicar()
+        private void Publicar()
         {
             try
             {
-                EscreveLog($"Verificando se existe o botão compartilhar");
-                Thread.Sleep(2000);
-                var elemento = Chrome.LocalizaElementoPropriedade("div", "aria-label", "Compartilhar", 10, 2, false);
-
-                if (elemento == null)
-                {
-                    return false;
-                }
-
                 EscreveLog($"Efetivando a publicação");
                 Thread.Sleep(2000);
-                elemento.Click();
-
-                return true;
+                Chrome.ClicaElementoPropriedade("div", "aria-label", "Publicar", 10, 2, false);
+                Thread.Sleep(5000);
+                EscreveLog($"Publicação realizada com sucesso");
             }
             catch (Exception ex)
             {
