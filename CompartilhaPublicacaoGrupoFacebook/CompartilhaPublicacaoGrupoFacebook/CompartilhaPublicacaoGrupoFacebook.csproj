@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <None Update="Arquivos\chromedriver.exe">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Arquivos\grupos.csv">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

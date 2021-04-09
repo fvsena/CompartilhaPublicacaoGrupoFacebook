@@ -16,6 +16,7 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
         private GoogleChrome Chrome = null;
         private List<Publicacao> resultados = new List<Publicacao>();
         Queue<string> grupos;
+        private bool isMarketplace = false;
 
 
         public void Iniciar(bool loop = false, bool exibirNavegador = false)
@@ -25,6 +26,7 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             string nomePerfil;
             string urlPublicacao;
             string navegador;
+            string marketplace;
 
             Console.WriteLine("### COMPARTILHAMENTO EM GRUPOS FACEBOOK ###");
             Console.Write("Login: ");
@@ -39,16 +41,27 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             Console.Write("URL: ");
             urlPublicacao = Console.ReadLine();
 
-            Console.Write("Exibir navegador? SIM ou NÃO ");
+            Console.Write("Exibir navegador - SIM ou NÃO: ");
             navegador = Console.ReadLine();
 
             while (!navegador.ToUpper().Equals("SIM") && !navegador.ToUpper().Equals("NÃO"))
             {
-                Console.Write("Exibir navegador? SIM ou NÃO ");
+                Console.Write("Exibir navegador - SIM ou NÃO: ");
                 navegador = Console.ReadLine();
             }
 
             exibirNavegador = navegador.ToUpper().Equals("SIM");
+
+            Console.Write("Marketplace - SIM ou NÃO: ");
+            marketplace = Console.ReadLine();
+
+            while (!marketplace.ToUpper().Equals("SIM") && !marketplace.ToUpper().Equals("NÃO"))
+            {
+                Console.Write("Marketplace - SIM ou NÃO: ");
+                marketplace = Console.ReadLine();
+            }
+
+            isMarketplace = marketplace.ToUpper().Equals("SIM");
 
         //INICIA PUBLICACAO
         PROCESSO:
@@ -84,7 +97,7 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
                                 AcessaTelaPagina(urlPublicacao);
                                 break;
                             case 2:
-                                IniciaCompartilhamento();
+                                IniciaCompartilhamento(isMarketplace);
                                 break;
                             case 3:
                                 SelecionaPerfil(nomePerfil);
@@ -183,7 +196,16 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
                 EscreveLog("Acessando link da publicação");
                 Thread.Sleep(5000);
                 Chrome.Navegador.Navigate().GoToUrl(urlPublicacao);
-                Chrome.LocalizaElementoTexto("span", "Compartilhar", 10, 2, true);
+
+                if (isMarketplace)
+                {
+                    Chrome.LocalizaElementoPropriedade("div", "aria-label", "Compartilhar", 10, 2, true);
+                }
+                else
+                {
+                    Chrome.LocalizaElementoTexto("span", "Compartilhar", 10, 2, true);
+                }
+                
             }
             catch (Exception ex)
             {
@@ -220,13 +242,20 @@ namespace CompartilhaPublicacaoGrupoFacebook.Interface
             }
         }
 
-        private void IniciaCompartilhamento()
+        private void IniciaCompartilhamento(bool isMarketplace = false)
         {
             try
             {
                 EscreveLog("Clicando em Compartilhar em um Grupo");
                 Thread.Sleep(2000);
-                Chrome.ClicaElementoTexto("span", "Compartilhar", 10, 2, true);
+                if (isMarketplace)
+                {
+                    Chrome.ClicaElementoPropriedade("div", "aria-label", "Compartilhar", 10, 2, true);
+                }
+                else
+                {
+                    Chrome.ClicaElementoTexto("span", "Compartilhar", 10, 2, true);
+                }
                 Chrome.ClicaElementoTexto("span", "Compartilhar em um grupo", 10, 2, true);
             }
             catch (Exception ex)
